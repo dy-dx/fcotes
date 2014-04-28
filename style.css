@@ -14,15 +14,19 @@ html, body {
 
 .head {
   position: absolute;
-  background-color: green;
+  background-color: #e8874b;
   width: 40px;
   height: 40px;
-  border-radius: 10px;
+  border-radius: 16px;
   z-index: 10; }
+  .head img {
+    width: 60px;
+    margin-left: -5px;
+    margin-top: -60px; }
 
 .segment {
   position: absolute;
-  background-color: blue;
+  background-color: #e8874b;
   width: 40px;
   height: 40px;
   border-radius: 14px; }

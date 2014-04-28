@@ -72,17 +72,16 @@ animate = () ->
 
 
 shootLaser = () ->
-  console.log 'pew pew'
   $laser1 = $('<div class="laser">')
   $laser2 = $('<div class="laser">')
 
-  x1 = snakeX + 20 + 12*Math.cos(snakeRads) + 12*Math.sin(snakeRads)
-  y1 = snakeY - 18 + 12*Math.sin(snakeRads) - 12*Math.cos(snakeRads)
+  x1 = snakeX + 20 + 12*Math.cos(snakeRads+0.2) - 47*Math.sin(snakeRads+0.2)
+  y1 = snakeY - 18 + 12*Math.sin(snakeRads+0.2) + 47*Math.cos(snakeRads+0.2)
   transform1 = "translate(#{x1}px, #{-y1}px) rotate(#{-snakeRads}rad)"
   $laser1.css '-webkit-transform': transform1, transform: transform1
 
-  x2 = snakeX + 20 + 12*Math.cos(snakeRads+1.5) + 12*Math.sin(snakeRads+1.5)
-  y2 = snakeY - 18 + 12*Math.sin(snakeRads+1.5) - 12*Math.cos(snakeRads+1.5)
+  x2 = snakeX + 20 + 12*Math.cos(snakeRads-0.1) - 40*Math.sin(snakeRads-0.1)
+  y2 = snakeY - 18 + 12*Math.sin(snakeRads-0.1) + 40*Math.cos(snakeRads-0.1)
   transform2 = "translate(#{x2}px, #{-y2}px) rotate(#{-snakeRads}rad)"
   $laser2.css '-webkit-transform': transform2, transform: transform2
 
