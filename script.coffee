@@ -15,7 +15,8 @@ snakeRads = Math.PI/2
 snakeX = 100
 # Assume the top-left corner of the browser is (0,0) and all Y values will be negative
 snakeY = -100
-baseVelocity = 3
+maxVelocity = 7
+baseVelocity = 2.5
 velocity = baseVelocity
 
 
@@ -64,7 +65,10 @@ animate = () ->
   $snake.children().each (i) ->
     $(@).css transformQueue[i*5]
   transformQueue.pop()
-  velocity = baseVelocity
+  if velocity > baseVelocity
+    velocity -= 1
+  else
+    velocity = baseVelocity
 
 
 shootLaser = () ->
@@ -95,16 +99,25 @@ shootLaser = () ->
 
 
 pewpewThrottled = false
+maxLaser = 220
 pewpew = (array) ->
-  return if pewpewThrottled || array[91] < 234
+  laser = array[91]
+  return if laser/maxLaser < 0.90
+  maxLaser = laser if laser > maxLaser
+  return if pewpewThrottled
   requestAnimationFrame shootLaser
   pewpewThrottled = true
-  setTimeout (-> pewpewThrottled = false), 110
+  setTimeout (-> pewpewThrottled = false), 150
 
 
+maxSnare = 190
 whip = (array) ->
   snare = array[382]
-  if snare > 170 then velocity += snare / 50
+  maxSnare = snare if snare > maxSnare
+  snareRatio = snare/maxSnare
+  if snareRatio > 0.75
+    velocity += 5*snare/maxSnare
+    velocity = maxVelocity if velocity > maxVelocity
 
 
 
