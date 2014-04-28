@@ -90,27 +90,37 @@ shootLaser = () ->
   requestAnimationFrame ->
     $laser1.css
       '-webkit-transform': transform1 + ' scaleX(10)' + ' translateX(100px)'
-      transform: transform1 + ' scaleX(10)' + ' translateX(100px)'
+      transform: transform1 + ' scaleX(18)' + ' translateX(200px)'
     $laser2.css
       '-webkit-transform': transform2 + ' scaleX(10)' + ' translateX(100px)'
-      transform: transform2 + ' scaleX(10)' + ' translateX(100px)'
+      transform: transform2 + ' scaleX(18)' + ' translateX(200px)'
 
   setTimeout (-> $laser1.add($laser2).remove()), 1000
 
 
 pewpewThrottled = false
-maxLaser = 220
+maxLaser = 1
 pewpew = (array) ->
   laser = array[91]
   return if laser/maxLaser < 0.90
   maxLaser = laser if laser > maxLaser
+  return if laserIsCharging()
   return if pewpewThrottled
   requestAnimationFrame shootLaser
   pewpewThrottled = true
   setTimeout (-> pewpewThrottled = false), 150
 
+# We don't want to shoot lasers for the first 3.5 seconds while it
+# figures out the maximum
+chargingMyLaser = true
+chargingMyLaserTimeout = false
+laserIsCharging = ->
+  if chargingMyLaser && !chargingMyLaserTimeout
+    chargingMyLaserTimeout = setTimeout (-> chargingMyLaser = false), 3500
+  return chargingMyLaser
 
-maxSnare = 190
+
+maxSnare = 160
 whip = (array) ->
   snare = array[382]
   maxSnare = snare if snare > maxSnare
@@ -136,7 +146,7 @@ onCanPlay = ->
 
   # Connect audio to speaker output
   # audioSource.connect audioContext.destination
-  gain.gain.value = 0.02
+  gain.gain.value = 0.2
   audioSource.connect gain
   gain.connect audioContext.destination
 

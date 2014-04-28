@@ -37,5 +37,5 @@ html, body {
   -webkit-transform-origin: left;
   -moz-transform-origin: left;
   transform-origin: left;
-  -webkit-transition: -webkit-transform 0.8s;
-  transition: transform 0.8s; }
+  -webkit-transition: -webkit-transform 1.6s;
+  transition: transform 1.6s; }
