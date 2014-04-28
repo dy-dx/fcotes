@@ -17,12 +17,25 @@ html, body
   width: 40px
   height: 40px
   border-radius: 10px
-  z-index: 1
+  z-index: 10
 .segment
   position: absolute
   background-color: blue
   width: 40px
   height: 40px
   border-radius: 14px
-  border-top: 2px solid white
 
+.laser
+  position: absolute
+  height: 4px
+  width: 20px
+  border-right: 1px solid orange
+  background-color: red
+  z-index: 20
+
+  -webkit-transform-origin: left
+  -moz-transform-origin: left
+  transform-origin: left
+
+  -webkit-transition: -webkit-transform 0.8s
+  transition: transform 0.8s

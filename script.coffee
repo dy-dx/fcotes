@@ -15,7 +15,8 @@ snakeRads = Math.PI/2
 snakeX = 100
 # Assume the top-left corner of the browser is (0,0) and all Y values will be negative
 snakeY = -100
-velocity = 3
+baseVelocity = 3
+velocity = baseVelocity
 
 
 transformQueue = []
@@ -63,19 +64,40 @@ animate = () ->
   $snake.children().each (i) ->
     $(@).css transformQueue[i*5]
   transformQueue.pop()
-  velocity = 3
+  velocity = baseVelocity
 
 
 shootLaser = () ->
-  # console.log 'pew pew'
-  $head.css 'background-color', 'red'
-  setTimeout (-> $head.css 'background-color', 'green'), 80
+  console.log 'pew pew'
+  $laser1 = $('<div class="laser">')
+  $laser2 = $('<div class="laser">')
+
+  x1 = snakeX + 20 + 12*Math.cos(snakeRads) + 12*Math.sin(snakeRads)
+  y1 = snakeY - 18 + 12*Math.sin(snakeRads) - 12*Math.cos(snakeRads)
+  transform1 = "translate(#{x1}px, #{-y1}px) rotate(#{-snakeRads}rad)"
+  $laser1.css '-webkit-transform': transform1, transform: transform1
+
+  x2 = snakeX + 20 + 12*Math.cos(snakeRads+1.5) + 12*Math.sin(snakeRads+1.5)
+  y2 = snakeY - 18 + 12*Math.sin(snakeRads+1.5) - 12*Math.cos(snakeRads+1.5)
+  transform2 = "translate(#{x2}px, #{-y2}px) rotate(#{-snakeRads}rad)"
+  $laser2.css '-webkit-transform': transform2, transform: transform2
+
+  $('.snake-container').prepend $laser1, $laser2
+  requestAnimationFrame ->
+    $laser1.css
+      '-webkit-transform': transform1 + ' scaleX(10)' + ' translateX(100px)'
+      transform: transform1 + ' scaleX(10)' + ' translateX(100px)'
+    $laser2.css
+      '-webkit-transform': transform2 + ' scaleX(10)' + ' translateX(100px)'
+      transform: transform2 + ' scaleX(10)' + ' translateX(100px)'
+
+  setTimeout (-> $laser1.add($laser2).remove()), 1000
 
 
 pewpewThrottled = false
 pewpew = (array) ->
   return if pewpewThrottled || array[91] < 234
-  shootLaser()
+  requestAnimationFrame shootLaser
   pewpewThrottled = true
   setTimeout (-> pewpewThrottled = false), 110
 
